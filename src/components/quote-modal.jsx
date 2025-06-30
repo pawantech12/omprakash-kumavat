@@ -26,7 +26,6 @@ import { Calculator, Send, User, Wrench } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Toaster } from "sonner";
 import axios from "axios";
 
 export default function QuoteModal({ children }) {
@@ -733,7 +732,6 @@ Please provide a detailed quote. Thank you!`;
           </motion.div>
         </DialogContent>
       </Dialog>
-      <Toaster />
     </>
   );
 }

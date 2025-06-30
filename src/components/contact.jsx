@@ -48,6 +48,7 @@ Please get back to me soon. Thank you!`;
           message
         )}`;
         window.open(whatsappUrl, "_blank");
+        reset();
       }
     } catch (error) {
       toast.error("Error sending message. Please try again later.");

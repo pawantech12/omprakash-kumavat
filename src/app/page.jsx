@@ -10,6 +10,7 @@ import GoogleMaps from "@/components/google-maps";
 import WhatsAppButton from "@/components/whatsapp-button";
 import ScrollToTop from "@/components/scroll-to-top";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "sonner";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
 
         <ScrollToTop />
       </TooltipProvider>
+      <Toaster />
     </main>
   );
 }
