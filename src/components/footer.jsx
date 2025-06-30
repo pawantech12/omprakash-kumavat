@@ -1,16 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Phone,
-  Mail,
-  MapPin,
-  Facebook,
-  Instagram,
-  Twitter,
-  Linkedin,
-  ArrowUp,
-} from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { smoothScrollTo } from "@/lib/smooth-scroll";
@@ -48,29 +38,6 @@ export default function Footer() {
               delivering quality construction solutions. Your trusted partner
               for all construction needs.
             </p>
-            <div className="flex space-x-4">
-              {[
-                { icon: Facebook, color: "blue" },
-                { icon: Instagram, color: "pink" },
-                { icon: Twitter, color: "cyan" },
-                { icon: Linkedin, color: "purple" },
-              ].map((social, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.2, rotate: 360 }}
-                  whileTap={{ scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    className={`border-slate-700 hover:bg-${social.color}-600 hover:border-${social.color}-600 bg-transparent`}
-                  >
-                    <social.icon className="w-4 h-4" />
-                  </Button>
-                </motion.div>
-              ))}
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -126,22 +93,29 @@ export default function Footer() {
               <div className="flex items-start space-x-3">
                 <Phone className="w-5 h-5 text-blue-500 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-slate-400">+91 98765 43210</p>
-                  <p className="text-slate-400">+91 87654 32109</p>
+                  <Link href="tel:+919820585835" className="text-slate-400">
+                    +91 9820585835
+                  </Link>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <Mail className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-slate-400">omprakash.kumavat@email.com</p>
-                  <p className="text-slate-400">info@omkumavat.com</p>
+                  <Link
+                    href="mailto:omparkashkumawat.smpr@gmail.com"
+                    className="text-slate-400"
+                  >
+                    omparkashkumawat.smpr@gmail.com
+                  </Link>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-orange-500 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-slate-400">123 Construction Street</p>
-                  <p className="text-slate-400">Mumbai, Maharashtra 400001</p>
+                  <p className="text-slate-400">
+                    Flatno.102, Arunoday residency, Jai Malhar, Bapgoan,
+                    Maharashtra 421302
+                  </p>
                 </div>
               </div>
             </div>
@@ -154,13 +128,13 @@ export default function Footer() {
           </p>
           <div className="flex items-center space-x-6 mt-4 md:mt-0">
             <Link
-              href="#"
+              href="/privacy"
               className="text-slate-400 hover:text-purple-500 text-sm transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
-              href="#"
+              href="/terms"
               className="text-slate-400 hover:text-purple-500 text-sm transition-colors"
             >
               Terms of Service
