@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import {
   Phone,
   Mail,
-  MapPin,
   Clock,
   Send,
   MessageCircle,
@@ -17,53 +15,44 @@ import {
   Building,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    service: "",
-    message: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post("/api/contact", data);
 
-    // Create WhatsApp message
-    const message = `New Contact Form Submission:
+      if (response.data.success) {
+        toast.success("Message sent successfully! We'll get back to you soon.");
+        // Create WhatsApp message
+        const message = `New Contact Form Submission:
     
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Service Required: ${formData.service}
-Message: ${formData.message}
+Name: ${data.name}
+Email: ${data.email}
+Phone: ${data.phone}
+Service Required: ${data.service}
+Message: ${data.message}
 
 Please get back to me soon. Thank you!`;
 
-    const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(
-      message
-    )}`;
-    window.open(whatsappUrl, "_blank");
-
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      service: "",
-      message: "",
-    });
-
-    // Show success message (you can add a toast notification here)
-    alert("Message sent successfully! We'll get back to you soon.");
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+        const whatsappUrl = `https://wa.me/9820585835?text=${encodeURIComponent(
+          message
+        )}`;
+        window.open(whatsappUrl, "_blank");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast.error("Error sending message. Please try again later.");
+    }
   };
 
   return (
@@ -168,7 +157,7 @@ Please get back to me soon. Thank you!`;
               </p>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label
@@ -181,10 +170,8 @@ Please get back to me soon. Thank you!`;
                     <Input
                       id="name"
                       name="name"
-                      value={formData.name}
-                      onChange={handleChange}
+                      {...register("name", { required: true })}
                       placeholder="Enter your full name"
-                      required
                     />
                   </div>
                   <div className="space-y-2">
@@ -199,10 +186,8 @@ Please get back to me soon. Thank you!`;
                       id="email"
                       name="email"
                       type="email"
-                      value={formData.email}
-                      onChange={handleChange}
+                      {...register("email", { required: true })}
                       placeholder="Enter your email"
-                      required
                     />
                   </div>
                 </div>
@@ -219,10 +204,8 @@ Please get back to me soon. Thank you!`;
                     <Input
                       id="phone"
                       name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
+                      {...register("phone", { required: true })}
                       placeholder="Enter your phone number"
-                      required
                     />
                   </div>
                   <div className="space-y-2">
@@ -236,8 +219,7 @@ Please get back to me soon. Thank you!`;
                     <Input
                       id="service"
                       name="service"
-                      value={formData.service}
-                      onChange={handleChange}
+                      {...register("service")}
                       placeholder="e.g., Plumbing, Tiling, etc."
                     />
                   </div>
@@ -254,21 +236,26 @@ Please get back to me soon. Thank you!`;
                   <Textarea
                     id="message"
                     name="message"
-                    value={formData.message}
-                    onChange={handleChange}
+                    {...register("message", { required: true })}
                     placeholder="Tell us about your project requirements..."
                     rows={5}
-                    required
                   />
                 </div>
 
                 <Button
                   type="submit"
                   size="lg"
+                  disabled={isSubmitting}
                   className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white text-base"
                 >
-                  Send Message
-                  <Send className=" w-5 h-5" />
+                  {isSubmitting ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className=" w-5 h-5" />
+                    </>
+                  )}
                 </Button>
               </form>
             </CardContent>

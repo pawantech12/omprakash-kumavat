@@ -95,7 +95,7 @@ export default function About() {
             </span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            With over 15 years of experience in civil construction, we deliver
+            With over 35 years of experience in civil construction, we deliver
             exceptional quality and reliability in every project.
           </p>
         </motion.div>

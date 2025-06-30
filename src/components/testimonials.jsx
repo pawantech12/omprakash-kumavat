@@ -131,9 +131,9 @@ export default function Testimonials() {
 
         {/* Ratings Summary */}
         <div className="mt-16 text-center">
-          <Card className="inline-block border-2 border-green-200 bg-green-50">
+          <Card className="inline-block border-2 max-[400px]:w-full border-green-200 bg-green-50">
             <CardContent className="p-6">
-              <div className="flex items-center justify-center space-x-4">
+              <div className="flex items-center justify-center gap-4 flex-wrap">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-green-800">4.9</div>
                   <div className="flex items-center justify-center space-x-1 mb-2">
@@ -148,7 +148,7 @@ export default function Testimonials() {
                 </div>
                 <div className="w-px h-12 bg-green-300"></div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-green-800">300+</div>
+                  <div className="text-3xl font-bold text-green-800">500+</div>
                   <div className="text-sm text-green-700">Happy Customers</div>
                 </div>
                 <div className="w-px h-12 bg-green-300"></div>
