@@ -24,7 +24,7 @@ export default function Contact() {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -50,7 +50,6 @@ Please get back to me soon. Thank you!`;
         window.open(whatsappUrl, "_blank");
       }
     } catch (error) {
-      console.error("Error sending message:", error);
       toast.error("Error sending message. Please try again later.");
     }
   };

@@ -114,8 +114,6 @@ export default function QuoteModal({ children }) {
 
   // Handle Submit
   const onSubmit = async (data) => {
-    console.log("Quote request submitted:", data);
-
     try {
       const response = await axios.post("/api/quote", data);
 
@@ -151,8 +149,6 @@ Please provide a detailed quote. Thank you!`;
         setIsOpen(false);
         setStep(1);
         reset(); // reset RHF form
-      } else {
-        console.error("Server error:", response.data.error);
       }
     } catch (error) {
       console.error("Axios error:", error.response?.data || error.message);
