@@ -45,11 +45,8 @@ export default function QuoteModal({ children }) {
       projectType: "",
       propertyType: "",
       area: "",
-      timeline: "",
-      budget: "",
       services: [],
       description: "",
-      urgency: "",
       preferredContact: "",
       visitRequired: false,
     },
@@ -57,59 +54,27 @@ export default function QuoteModal({ children }) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState(1);
-  const [estimatedCost, setEstimatedCost] = useState(0);
 
   const selectedServices = watch("services");
-  const urgency = watch("urgency");
-  const area = Number.parseInt(watch("area") || "0");
-  const projectType = watch("projectType");
 
   // Services list
   const services = [
     {
       id: "plumbing",
       name: "Plumbing Services",
-      baseRate: 150,
-      unit: "per point",
     },
     {
       id: "electrical",
       name: "Electrical & Lighting",
-      baseRate: 200,
-      unit: "per point",
     },
     {
       id: "furniture",
       name: "Furniture Work",
-      baseRate: 500,
-      unit: "per sq ft",
     },
-    { id: "tiling", name: "Tiling Services", baseRate: 80, unit: "per sq ft" },
-    { id: "granite", name: "Granite Work", baseRate: 120, unit: "per sq ft" },
-    { id: "pop", name: "POP & Ceiling", baseRate: 90, unit: "per sq ft" },
+    { id: "tiling", name: "Tiling Services" },
+    { id: "granite", name: "Granite Work" },
+    { id: "pop", name: "POP & Ceiling" },
   ];
-
-  // Estimate Calculation (auto-updates)
-  useEffect(() => {
-    if (!selectedServices) return;
-    let total = 0;
-
-    selectedServices.forEach((serviceId) => {
-      const service = services.find((s) => s.id === serviceId);
-      if (!service) return;
-
-      if (serviceId === "plumbing" || serviceId === "electrical") {
-        total += service.baseRate * Math.ceil(area / 100) * 5; // 5 points per 100 sq ft
-      } else {
-        total += service.baseRate * area;
-      }
-    });
-
-    if (projectType === "commercial") total *= 1.3;
-    if (urgency === "urgent") total *= 1.2;
-
-    setEstimatedCost(total);
-  }, [selectedServices, area, urgency, projectType]);
 
   // Handle Submit
   const onSubmit = async (data) => {
@@ -129,9 +94,6 @@ Area: ${data.area} sq ft
 Services: ${data.services
           .map((s) => services.find((srv) => srv.id === s)?.name)
           .join(", ")}
-Timeline: ${data.timeline}
-Budget Range: ${data.budget}
-Estimated Cost: ₹${estimatedCost.toLocaleString()}
 
 Description: ${data.description}
 
@@ -394,89 +356,6 @@ Please provide a detailed quote. Thank you!`;
                               </p>
                             )}
                           </div>
-
-                          <div className="space-y-2">
-                            <Label className="text-base">Timeline</Label>
-                            <Select
-                              onValueChange={(value) =>
-                                setValue("timeline", value)
-                              }
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select timeline" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="1-2weeks">
-                                  1-2 Weeks
-                                </SelectItem>
-                                <SelectItem value="1month">1 Month</SelectItem>
-                                <SelectItem value="2-3months">
-                                  2-3 Months
-                                </SelectItem>
-                                <SelectItem value="6months">
-                                  6+ Months
-                                </SelectItem>
-                                <SelectItem value="flexible">
-                                  Flexible
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label className="text-base">Budget Range</Label>
-                            <Select
-                              onValueChange={(value) =>
-                                setValue("budget", value)
-                              }
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select budget range" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="under-50k">
-                                  Under ₹50,000
-                                </SelectItem>
-                                <SelectItem value="50k-1l">
-                                  ₹50,000 - ₹1,00,000
-                                </SelectItem>
-                                <SelectItem value="1l-3l">
-                                  ₹1,00,000 - ₹3,00,000
-                                </SelectItem>
-                                <SelectItem value="3l-5l">
-                                  ₹3,00,000 - ₹5,00,000
-                                </SelectItem>
-                                <SelectItem value="5l-10l">
-                                  ₹5,00,000 - ₹10,00,000
-                                </SelectItem>
-                                <SelectItem value="above-10l">
-                                  Above ₹10,00,000
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label className="text-base">Urgency</Label>
-                            <Select
-                              onValueChange={(value) =>
-                                setValue("urgency", value)
-                              }
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select urgency" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="normal">Normal</SelectItem>
-                                <SelectItem value="urgent">
-                                  Urgent (+20% cost)
-                                </SelectItem>
-                                <SelectItem value="emergency">
-                                  Emergency
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
                         </div>
 
                         {/* Services Selection */}
@@ -519,9 +398,6 @@ Please provide a detailed quote. Thank you!`;
                                   >
                                     {service.name}
                                   </Label>
-                                  <p className="text-sm text-gray-600">
-                                    ₹{service.baseRate} {service.unit}
-                                  </p>
                                 </div>
                               </div>
                             ))}
@@ -598,7 +474,7 @@ Please provide a detailed quote. Thank you!`;
                           <CardHeader>
                             <CardTitle className="flex items-center space-x-2 text-blue-800">
                               <Calculator className="w-5 h-5" />
-                              <span>Estimated Quote</span>
+                              <span>Qoute Summary</span>
                             </CardTitle>
                           </CardHeader>
                           <CardContent className="space-y-4">
@@ -634,25 +510,6 @@ Please provide a detailed quote. Thank you!`;
                                   {watch("projectType")}
                                 </span>
                               </div>
-
-                              {watch("urgency") === "urgent" && (
-                                <div className="flex justify-between items-center text-orange-600">
-                                  <span>Urgency Surcharge:</span>
-                                  <span>+20%</span>
-                                </div>
-                              )}
-                            </div>
-
-                            <div className="border-t pt-4">
-                              <div className="flex justify-between items-center text-lg font-bold text-blue-800">
-                                <span>Estimated Total:</span>
-                                <span>₹{estimatedCost.toLocaleString()}</span>
-                              </div>
-                              <p className="text-sm text-gray-600 mt-2">
-                                * This is a rough estimate. Final quote may vary
-                                based on site inspection and specific
-                                requirements.
-                              </p>
                             </div>
                           </CardContent>
                         </Card>

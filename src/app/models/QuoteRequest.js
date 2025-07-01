@@ -10,11 +10,9 @@ const QuoteRequestSchema = new mongoose.Schema(
     projectType: String,
     propertyType: String,
     area: String,
-    timeline: String,
-    budget: String,
+
     services: [String],
     description: String,
-    urgency: String,
     preferredContact: String,
     visitRequired: Boolean,
   },
